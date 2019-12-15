@@ -32,4 +32,4 @@ function startUp() {
     };
     console.log(table.toString());
     }
-    )}
+    )};

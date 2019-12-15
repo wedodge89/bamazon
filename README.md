@@ -1,4 +1,8 @@
-# bamazon
+#Bamazon
+
+This app uses MySQL with some npm packages to replicate an Amazon-style storefront where customers can purchase a variety of products.
+
+<!-- # bamazon
 An amazon-esque storefront using Node.js and MySQL
 
 
@@ -184,4 +188,4 @@ After completing the homework please add the piece to your portfolio. Make sure 
 
 If you have any questions about this project or the material we have covered, please post them in the community channels in slack so that your fellow developers can help you! If you're still having trouble, you can come to office hours for assistance from your instructor and TAs.
 
-**Good Luck!**
+**Good Luck!** -->
