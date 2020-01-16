@@ -42,8 +42,7 @@ function startUp() {
             result[i].price,
             result[i].stock_quantity
             ]
-    )
-    };
+        )};
 
     console.log("Welcome to Bamazon! Here's what's on sale today.")
     console.log(table.toString())
@@ -81,49 +80,46 @@ function startUp() {
             let purchasePrice = selectedProduct[0][3];
             let purchaseStock = selectedProduct[0][4];
             let totalCost = purchasePrice * answer.amount;
-            if (purchaseStock >= answer.amount && answer.amount > 0) {
-            if (answer.amount === 1) {
-                console.log(`That's ${answer.amount} copy of ${purchaseProduct} at $${purchasePrice}. Enjoy!`)
+            if (answer.amount <= 0 || isNaN(answer.amount)) {
+                console.log("Please input a valid (positive, non-zero) number.");
+                buyNumber(purchaseProduct);
+            } else if (answer.amount > purchaseStock) {
+                console.log("I'm sorry, but we don't have that many in stock. Please try again with a smaller order.");
+                buyNumber(purchaseProduct);
             } else {
-                console.log(`That's ${answer.amount} copies of ${purchaseProduct} at $${purchasePrice} each. That's a total of $${totalCost}. Enjoy!`)
-            }
-            let updatedQuantity = purchaseStock -= parseInt(answer.amount);
-            console.log(`That leaves ${updatedQuantity} in stock.`)
-            con.query(
-                "UPDATE products SET ? WHERE ?",
-                [
+                if (answer.amount === 1) {
+                    console.log(`That's ${answer.amount} copy of ${purchaseProduct} at $${purchasePrice}. Enjoy!`)
+                } else {
+                    console.log(`That's ${answer.amount} copies of ${purchaseProduct} at $${purchasePrice} each. That's a total of $${totalCost}. Enjoy!`)
+                    let updatedQuantity = purchaseStock -= parseInt(answer.amount);
+                    console.log(`That leaves ${updatedQuantity} in stock.`)
+                    con.query(
+                    "UPDATE products SET ? WHERE ?",
+                        [
+                            {
+                            stock_quantity: updatedQuantity
+                            },
+                            {
+                            product_name: purchaseProduct
+                            }
+                        ]
+                    ).then(function(answer) {
+                    inquirer
+                    .prompt(
                     {
-                        stock_quantity: updatedQuantity
-                    },
-                    {
-                        product_name: purchaseProduct
-                    }
-                ],
-                )
-        } else if (answer.amount <= 0) {
-            console.log("Please input a valid (positive, non-zero) number.");
-            buyNumber(answer);
-        } else {
-            console.log("I'm sorry, but we don't have that many in stock. Please try again with a smaller order.");
-            buyNumber(answer);
-        }
-        }).then(function(answer) {
-            inquirer
-            .prompt(
-                {
                     type: "confirm",
                     name: "buyMore",
-                    default: "true",
+                    default: true,
                     message: "Would you like to continue shopping?"
-                }
-            ).then(function(answer) {
-                if (answer === true) {
+                    }
+                    ).then(function(answer) {
+                    if (answer.buyMore) {
                     startUp();
-                } else {
+                    } else {
                     console.log("Thanks for shopping with us today!");
                     con.end();
                     process.exit();
-                }
-            })
-        });
-    })})}
+                    };
+                });
+            });
+        }}})})};
