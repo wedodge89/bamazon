@@ -2,21 +2,7 @@
 
 This app uses MySQL with some npm packages to replicate an Amazon-style storefront where customers can purchase a variety of products.
 
-<!-- # bamazon
-An amazon-esque storefront using Node.js and MySQL
-
-
-# Node.js & MySQL
-
-## Overview
-
-In this activity, you'll be creating an Amazon-like storefront with the MySQL skills you learned this unit. The app will take in orders from customers and deplete stock from the store's inventory. As a bonus task, you can program your app to track product sales across your store's departments and then provide a summary of the highest-grossing departments in the store.
-
-Make sure you save and require the MySQL and Inquirer npm packages in your homework files--your app will need them for data input and storage.
-
-## Submission Guide
-
-Make sure you use the normal GitHub. Because this is a CLI App, there will be no need to deploy it to Heroku. This time, though, you need to include screenshots, a gif, and/or a video showing us that you got the app working with no bugs. You can include these screenshots or a link to a video in a `README.md` file.
+<!-- 
 
 * Include screenshots (or a video) of typical user flows through your application (for the customer and if relevant the manager/supervisor). This includes views of the prompts and the responses after their selection (for the different selection options).
 
@@ -189,3 +175,9 @@ After completing the homework please add the piece to your portfolio. Make sure 
 If you have any questions about this project or the material we have covered, please post them in the community channels in slack so that your fellow developers can help you! If you're still having trouble, you can come to office hours for assistance from your instructor and TAs.
 
 **Good Luck!** -->
+
+
+for (let i = 0; i < productArray.length; i ++) {
+                selectedProduct.push(productArray[i].product_name);
+                console.log(productArray[i].product_name)
+                }
