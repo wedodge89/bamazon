@@ -143,13 +143,13 @@ function purchaseQuantity() {
 
             console.log("Please choose a number greater than 0.");
 
-            purchaseQuantity(product);
+            purchaseQuantity(purchaseProduct);
 
         } else {
 
             console.log("We don't have that many in stock. Please enter a lower number.");
 
-            purchaseQuantity(product);
+            purchaseQuantity(purchaseProduct);
 
         }
     });
