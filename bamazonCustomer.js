@@ -107,7 +107,7 @@ function purchaseProduct() {
 
             console.log("Please enter a valid product ID number.");
 
-            purchase();
+            purchaseProduct();
             
             return;
         };
@@ -231,7 +231,7 @@ function buyMore() {
 
         if (answer.buyMore == true) {
 
-            startUp();
+            shopStart();
 
         } else {
 

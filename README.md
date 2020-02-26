@@ -4,7 +4,9 @@ This app uses node.js and MySQL with some npm packages to replicate an Amazon-st
 
 ## Purpose
 
-This app simulates an online shopping experience using Node.js. The user can shop a selection of parody products . In terms of my own development, this project taught me how to use MySQL in the Command Line.
+This app simulates an online shopping experience using Node.js. The user can shop a selection of parody products . 
+
+In terms of my own development, this project taught me a lot about using Node.js, and specifically using it with a MySQL database. 
 
 ## Process
 Upon being started via node, the application makes a connection to the relevant MySQL database. Then, it uses the CLI-Table package to create a clean table of all of the products for sale and their department, price, etc. In addition to creating the table, it also creates an array with these objects. 
