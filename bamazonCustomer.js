@@ -1,7 +1,9 @@
+// Require necessary NPM packages
 const inquirer = require("inquirer");
 const mysql = require("mysql")
 const Table = require("cli-table");
 
+// Pass in credentials and parameters for MySQL database
 const conn = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -9,21 +11,24 @@ const conn = mysql.createConnection({
     database: "bamazon"
 });
 
+// Establish connection to MySQL database
 conn.connect(function(err) {
     if (err) throw err;
     startUp();
 });
 
+// Instantiate dbArray for storing information from database
 let dbArray = [];
 
+// Instantiate purchase parameters as global variables
 let idPurchase;
 let productPurchase;
 let deptPurchase;
 let costPurchase;
 let stockPurchase;
-
 let quantityPurchase;
 
+// Create formatted table for CLI
 let table = new Table ({
     head: ["ID #", "Product Name", "Department", "Price", "Stock"],
     colWidths: [7, 50, 25, 10, 7]
@@ -59,7 +64,7 @@ function startUp() {
 
 };
 
-// Display table and call next funtion
+// Display table and call next function
 function shopStart() {
     
     console.log("Welcome to Bamazon! Here's what is on sale today!");
@@ -69,7 +74,7 @@ function shopStart() {
     purchaseProduct();
 };
 
-// The prompt that asks the user to select a product ID number and quantity
+// Prompt user to select product for purchase
 function purchaseProduct() {
 
     inquirer
@@ -82,6 +87,7 @@ function purchaseProduct() {
     )
     .then(function (answer) {
         if (parseInt(answer.product) <= dbArray.length) {
+            
             for (let i = 0; i < dbArray.length; i ++) {
                 if (dbArray[i][0] === answer.product) {
                     idPurchase = dbArray[i][0]
@@ -92,11 +98,17 @@ function purchaseProduct() {
                     console.log(`You have chosen ${productPurchase}.`)
                 }
             };
-            purchaseQuantity()
+
+            purchaseQuantity();
+
             return;
+
         } else {
+
             console.log("Please enter a valid product ID number.");
+
             purchase();
+            
             return;
         };
     });
@@ -104,7 +116,9 @@ function purchaseProduct() {
 
 // Prompt the user for how many they would like to purchase.
 function purchaseQuantity() {
+    
     let maxQuantity = stockPurchase;
+    
     inquirer
     .prompt(
         {
@@ -113,21 +127,36 @@ function purchaseQuantity() {
             message: "How many copies would you like? (Max: " + maxQuantity + ")"
         }
     ).then(function(answer) {
+
         quantityPurchase = answer.quantity;
+
         if (parseInt(quantityPurchase) <= parseInt(maxQuantity) && (parseInt(quantityPurchase) >= 1)) {
-        confirmPurchase();
+            
+            confirmPurchase();
+
         } else if (parseInt(quantityPurchase) <= 0) {
-            console.log("Please choose a number greater than 0.")
-        } else {
-            console.log("We don't have that many in stock. Please enter a lower number.");
+
+            console.log("Please choose a number greater than 0.");
+
             purchaseQuantity(product);
+
+        } else {
+
+            console.log("We don't have that many in stock. Please enter a lower number.");
+
+            purchaseQuantity(product);
+
         }
-    })
+    });
 };
 
+// Confirm purchase before querying database
 function confirmPurchase() {
+    
     let totalCost = parseInt(quantityPurchase) * parseFloat(costPurchase);
+    
     if (quantityPurchase > 1) {
+
         inquirer
         .prompt(
             {
@@ -137,9 +166,12 @@ function confirmPurchase() {
                 default: "true"
             }
         ).then(function(answer) {
+
             makePurchase(answer);
+
         })
     } else {
+
         inquirer
         .prompt(
             {
@@ -149,13 +181,17 @@ function confirmPurchase() {
                 default: "true"
             }
         ).then(function(answer) {
+
             makePurchase(answer);
+
         });
     }
 };
 
 function makePurchase(answer) {
+
     if (answer.confirm === true) {
+        
         let updatedQuantity = parseInt(stockPurchase) - parseInt(quantityPurchase);
         
         conn.query(
@@ -180,8 +216,9 @@ function makePurchase(answer) {
     }
 };
 
-// Prompt the 
+// Prompt the user to continue shopping
 function buyMore() {
+
     inquirer
     .prompt(
         {
@@ -191,12 +228,19 @@ function buyMore() {
             message: "Would you like to keep shopping?"
         }
     ).then(function(answer) {
+
         if (answer.buyMore == true) {
+
             startUp();
+
         } else {
+
             console.log("Thanks for shopping with us today!");
+
             conn.end();
+
             process.exit();
+            
         }
     });
 };
