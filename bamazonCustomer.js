@@ -39,6 +39,11 @@ function startUp() {
 
     conn.query("SELECT * FROM products", function (err, result) {
         if (err) throw err;
+        
+        table.splice(0, table.length);
+
+        dbArray.splice(0, dbArray.length);
+
         for (let i = 0; i < result.length; i ++) {
             table.push(
                 [
@@ -231,7 +236,7 @@ function buyMore() {
 
         if (answer.buyMore == true) {
 
-            shopStart();
+            startUp();
 
         } else {
 
