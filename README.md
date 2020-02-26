@@ -17,5 +17,6 @@ Upon being started via node, the application makes a connection to the relevant 
 
 First, it asks the user to select a product from the table by entering a product ID number. If the user enters anything that is not a valid product ID number (whether it is too high, too low, or not a number), a message is printed to retry, and then the app starts over from that point.
 
+Next, the user selects a quantity of the product to purchase. Again, tests are run to ensure that a valid number that is less than or equal to the amount is stock is selected.
 
 Finally, the user is asked if they wish to continue shopping on Bamazon. If yes (default), the process starts over. Otherwise, the application closes.
