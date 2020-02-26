@@ -21,3 +21,4 @@ Next, the user selects a quantity of the product to purchase. Again, tests are r
 
 Before finalizing the purchase and updating the database, a final prompt asks the user to confirm the total purchase, including product name, quantity, unit cost, and total cost. 
 
+If the user confirms the purchase, then the MySQL database is updated with the new stock quantity. The user is then asked if they wish to continue shopping. If yes, the app restarts from the point where the table is first displayed. If no, the database connection and the app are closed.
