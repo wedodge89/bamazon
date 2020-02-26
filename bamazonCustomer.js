@@ -139,9 +139,9 @@ function purchaseQuantity() {
             
             confirmPurchase();
 
-        } else if (parseInt(quantityPurchase) <= 0) {
+        } else if (parseInt(quantityPurchase) <= 0 || isNaN(quantityPurchase)) {
 
-            console.log("Please choose a number greater than 0.");
+            console.log("Please enter a number greater than 0.");
 
             purchaseQuantity(purchaseProduct);
 
