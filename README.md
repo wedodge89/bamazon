@@ -19,4 +19,5 @@ First, it asks the user to select a product from the table by entering a product
 
 Next, the user selects a quantity of the product to purchase. Again, tests are run to ensure that a valid number that is less than or equal to the amount is stock is selected.
 
-Finally, the user is asked if they wish to continue shopping on Bamazon. If yes (default), the process starts over. Otherwise, the application closes.
+Before finalizing the purchase and updating the database, a final prompt asks the user to confirm the total purchase, including product name, quantity, unit cost, and total cost. 
+
