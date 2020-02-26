@@ -17,6 +17,11 @@ conn.connect(function(err) {
 let selectedProduct = [];
 let dbArray = [];
 
+let productPurchase;
+let quantityPurchase;
+let costPurchase;
+let stockPurchase;
+
 let table = new Table ({
     head: ["ID #", "Product Name", "Department", "Price", "Stock"],
     colWidths: [7, 50, 25, 10, 7]
@@ -102,24 +107,66 @@ function purchaseQuantity(product) {
             message: "How many copies would you like? (Max: " + maxQuantity + ")"
         }
     ).then(function(answer) {
+        if (parseInt(answer.quantity) <= parseInt(maxQuantity)) {
         confirmPurchase(answer);
+        } else {
+            console.log("We don't have that many in stock. Please enter a lower number.");
+            purchaseQuantity(product);
+        }
     })
 };
 
 function confirmPurchase(quantity) {
     let totalCost = parseFloat(quantity.quantity) * parseFloat(selectedProduct[0][3]);
-    inquirer
-    .prompt(
-        {
-            type: "confirm",
-            name: "confirm",
-            message: `To confirm, that's ${quantity.quantity} copies of ${selectedProduct[0][1]} at $${selectedProduct[0][3]} each for a total of $${totalCost}. Is that correct?`,
-            default: "true"
-        }
-    ).then(function(answer) {
-        makePurchase(answer);
-    })
+    if (quantity.quantity > 1) {
+        inquirer
+        .prompt(
+            {
+                type: "confirm",
+                name: "confirm",
+                message: `To confirm, that's ${quantity.quantity} copies of ${selectedProduct[0][1]} at $${selectedProduct[0][3]} each for a total of $${totalCost}. Is that correct?`,
+                default: "true"
+            }
+        ).then(function(answer) {
+            makePurchase(answer);
+        })
+    } else {
+        inquirer
+        .prompt(
+            {
+                type: "confirm",
+                name: "confirm",
+                message: `To confirm, that's 1 copy of ${selectedProduct[0][1]} for $${selectedProduct[0][3]}. Is that correct?`,
+                default: "true"
+            }
+        ).then(function(answer) {
+            makePurchase(answer);
+        })
+    }
 };
+
+function makePurchase(answer) {
+    if (answer.confirm === true) {
+        let updatedQuantity = parseInt(selectedProduct[0][4]) - parseInt(quantity.quantity);
+        console.log(`That leaves ${updatedQuantity} in stock.`)
+        conn.query(
+            "UPDATE products SET ? WHERE ?",
+            [
+                {
+                    stock_quantity: updatedQuantity
+                },
+                {
+                    product_name: selectedProduct[0][1]
+                }
+            ]
+        ).then(function() {
+            buyMore();
+        });
+        } else {
+        console.log("Let's start over.");
+        purchaseProduct();
+    }
+}
 
 
 
