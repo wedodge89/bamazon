@@ -11,6 +11,8 @@ const conn = mysql.createConnection({
     database: "bamazon"
 });
 
+loadingScreen();
+
 // Establish connection to MySQL database
 conn.connect(function(err) {
     if (err) throw err;
@@ -34,9 +36,22 @@ let table = new Table ({
     colWidths: [7, 50, 25, 10, 7]
 });
 
+function loadingScreen() {
+    console.log("Now loading...");
+    console.log(`
+    $$\\                                                                       
+    $$ |                                                                      
+    $$$$$$$\\   $$$$$$\\  $$$$$$\\$$$$\\   $$$$$$\\  $$$$$$$$\\  $$$$$$\\  $$$$$$$\\  
+    $$  __$$\\  \\____$$\\ $$  _$$  _$$\\  \\____$$\\ \\____$$  |$$  __$$\\ $$  __$$\\ 
+    $$ |  $$ | $$$$$$$ |$$ / $$ / $$ | $$$$$$$ |  $$$$ _/ $$ /  $$ |$$ |  $$ |
+    $$ |  $$ |$$  __$$ |$$ | $$ | $$ |$$  __$$ | $$  _/   $$ |  $$ |$$ |  $$ |
+    $$$$$$$  |\\$$$$$$$ |$$ | $$ | $$ |\\$$$$$$$ |$$$$$$$$\\ \\$$$$$$  |$$ |  $$ |
+    \\_______/  \\_______|\\__| \\__| \\__| \\_______|\\________| \\______/ \\__|  \\__|
+                                                                              `);
+}
+
 // Creates product table, then calls next function.
 function startUp() {
-
     conn.query("SELECT * FROM products", function (err, result) {
         if (err) throw err;
         
