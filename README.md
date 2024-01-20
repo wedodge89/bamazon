@@ -4,7 +4,12 @@ This app uses node.js and MySQL with some npm packages to replicate an Amazon-st
 
 ## How to Run
 
-In order to run this application on your local machine, you must first download the code. Then, from your Terminal (MacOS) or Command Prompt (Windows). Then, within that application, navigate to the [bamazon] folder. enter the command "npm install" to download the required packages. Then, simply type "node bamazonCustomer.js".
+In order to run this application on your local machine:
+  1. Download the code. 
+  2. Run Terminal (MacOS) or Command Prompt (Windows).
+  3. Navigate to the [bamazon] folder inside the appropriate application.
+  4. Run `npm install` to download the required packages.
+  5. Run `node bamazonCustomer.js` to open the application.
 
 ## Purpose
 
